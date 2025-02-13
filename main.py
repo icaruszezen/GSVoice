@@ -17,18 +17,11 @@ class GSVoicePlugin(BasePlugin):
     # 插件初始化
     def __init__(self, host: APIHost):
         super().__init__(host)
-
-
-
-    # 异步初始化
-    async def initialize(self):
-        # 加载api路径
         config_path = os.path.join(os.path.dirname(__file__), 'config.yaml')
         with open(config_path, 'r', encoding='utf-8') as f:
             config = yaml.safe_load(f)
 
         self.api_url = config['api_url']
-        pass
 
     async def generate_audio(self,character,text):
         url = self.api_url + "/character"  # 替换为实际接口地址
@@ -44,24 +37,24 @@ class GSVoicePlugin(BasePlugin):
             "Accept": "application/json"
         }
 
-        try:
-            response = requests.post(
-                url,
-                data=json.dumps(payload),
-                headers=headers
-            )
 
-            # 检查响应状态
-            if response.status_code == 200:
-                print("请求成功！")
-                with open('./output.wav', 'wb') as f:
-                    f.write(response.content)
-                print("音频文件已保存为：./output.wav")
-                return "./output.wav"
-            else:
-                print(f"请求失败，状态码：{response.status_code}")
-                print("错误信息：", response.text)
-                return
+        response = requests.post(
+            url,
+            data=json.dumps(payload),
+            headers=headers
+        )
+
+        # 检查响应状态
+        if response.status_code == 200:
+            print("请求成功！")
+            with open('./output.wav', 'wb') as f:
+                f.write(response.content)
+            print("音频文件已保存为：./output.wav")
+            return "./output.wav"
+        else:
+            print(f"请求失败，状态码：{response.status_code}")
+            print("错误信息：", response.text)
+            return None
 
 
     # 处理发送的消息
@@ -88,8 +81,6 @@ class GSVoicePlugin(BasePlugin):
             if message_elements:
                 msg_chain = MessageChain(message_elements)
                 await ctx.reply(msg_chain)
-
-
         except Exception as e:
             print(f"生成语音失败: {e}")
             return
