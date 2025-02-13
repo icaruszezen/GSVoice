@@ -25,7 +25,7 @@ class GSVoicePlugin(BasePlugin):
 
     def generate_audio(self,character,text):
         #url = self.api_url + "/character"  # 替换为实际接口地址
-        url = "http://127.0.0.1:9880/character"
+        url = "http://192.168.50.160:9880/character"
         payload = {
             "character": character,
             "text": text,
