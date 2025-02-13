@@ -63,7 +63,7 @@ class GSVoicePlugin(BasePlugin):
         #处理消息
         # 清理Markdown格式并生成语音
         text = clean_markdown(ctx.event.response_text)
-
+        print("对以下内容进行音频处理:"+text)
         try:
             audio_path = await self.generate_audio("Amiya", text)
             if audio_path is None:  # 文本过长或生成失败
