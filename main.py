@@ -60,12 +60,42 @@ class GSVoicePlugin(BasePlugin):
     # 处理发送的消息
     @handler(NormalMessageResponded)
     async def handle_message(self, ctx: EventContext):
+
         #处理消息
         # 清理Markdown格式并生成语音
         text = clean_markdown(ctx.event.response_text)
         print("对以下内容进行音频处理:"+text)
         try:
-            audio_path = self.generate_audio("Amiya", text)
+            #audio_path = self.generate_audio("Amiya", text)
+            url = "http://127.0.0.1:9880/character"
+            payload = {
+                "character": character,
+                "text": text,
+                "text_language": "zh",
+            }
+
+            headers = {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+
+            response = requests.post(
+                url,
+                data=json.dumps(payload),
+                headers=headers
+            )
+
+            # 检查响应状态
+            if response.status_code == 200:
+                print("请求成功！")
+                with open('./output.wav', 'wb') as f:
+                    f.write(response.content)
+                print("音频文件已保存为：./output.wav")
+                audio_path = "./output.wav"
+            else:
+                print(f"请求失败，状态码：{response.status_code}")
+                print("错误信息：", response.text)
+                audio_path =  None
             if audio_path is None:  # 文本过长或生成失败
                 return
 
