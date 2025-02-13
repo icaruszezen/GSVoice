@@ -66,7 +66,7 @@ class GSVoicePlugin(BasePlugin):
 
         try:
             audio_path = await self.generate_audio("Amiya", text)
-            if not audio_path:  # 文本过长或生成失败
+            if audio_path is None:  # 文本过长或生成失败
                 return
 
             # 构建消息链
