@@ -98,7 +98,7 @@ class GSVoicePlugin(BasePlugin):
                 audio_path =  None
             if audio_path is None:  # 文本过长或生成失败
                 return
-
+            print("语音生成成功，等待发送！")
             # 构建消息链
             message_elements = []
 
