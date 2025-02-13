@@ -23,7 +23,7 @@ class GSVoicePlugin(BasePlugin):
 
         self.api_url = config['api_url']
 
-    async def generate_audio(self,character,text):
+    def generate_audio(self,character,text):
         #url = self.api_url + "/character"  # 替换为实际接口地址
         url = "http://127.0.0.1:9880/character"
         payload = {
@@ -65,7 +65,7 @@ class GSVoicePlugin(BasePlugin):
         text = clean_markdown(ctx.event.response_text)
         print("对以下内容进行音频处理:"+text)
         try:
-            audio_path = await self.generate_audio("Amiya", text)
+            audio_path = self.generate_audio("Amiya", text)
             if audio_path is None:  # 文本过长或生成失败
                 return
 
