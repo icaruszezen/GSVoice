@@ -69,7 +69,7 @@ class GSVoicePlugin(BasePlugin):
             #audio_path = self.generate_audio("Amiya", text)
             url = "http://127.0.0.1:9880/character"
             payload = {
-                "character": character,
+                "character": "Amiya",
                 "text": text,
                 "text_language": "zh",
             }
