@@ -139,7 +139,8 @@ def _process_symbols(text: str) -> str:
     
     # 移除其他所有特殊符号（保留指定的标点符号）
     text = re.sub(f'[^\\w\\s{preserved_pattern}]', '', text)
-    
+    text = re.sub(r'٩', '', text)  # 移除特殊符号
+    text = re.sub(r'و', '', text)  # 移除特殊符号
     return text
 
 def clean_markdown(text: str) -> str:
@@ -155,7 +156,7 @@ def clean_markdown(text: str) -> str:
         text = re.sub(pattern, '', text)
         text = re.sub(r'\n\s*\n', '\n', text.strip())
         iteration += 1
-    
+
     # 移除代码块
     text = re.sub(r'```[\s\S]*?```', '', text)
     
